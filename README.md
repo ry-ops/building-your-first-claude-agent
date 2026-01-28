@@ -1,5 +1,9 @@
 # Building Your First Claude Agent
 
+<p align="center">
+  <img src="hero.svg" alt="Building Your First Claude Agent" width="100%">
+</p>
+
 A comprehensive, production-ready guide to building AI agents with Claude and the Anthropic SDK in TypeScript.
 
 ## Overview
