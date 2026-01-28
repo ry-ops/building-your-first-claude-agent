@@ -1,0 +1,36 @@
+{
+  "name": "building-your-first-claude-agent",
+  "version": "1.0.0",
+  "description": "A comprehensive guide to building production-ready Claude agents with TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/agent.ts",
+    "example:simple": "ts-node examples/simple-agent.ts",
+    "example:workflow": "ts-node examples/multi-step-workflow.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "claude",
+    "ai",
+    "anthropic",
+    "agent",
+    "typescript",
+    "sdk"
+  ],
+  "author": "ry-ops",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
