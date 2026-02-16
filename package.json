@@ -22,7 +22,7 @@
   "author": "ry-ops",
   "license": "MIT",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.0",
+    "@anthropic-ai/sdk": "^0.71.2",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
