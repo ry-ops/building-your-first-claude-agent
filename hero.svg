@@ -1,237 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <defs>
-    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e1b4b"/>
-    </linearGradient>
-
-    <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="50%" stop-color="#a855f7"/>
-      <stop offset="100%" stop-color="#6366f1"/>
-    </linearGradient>
-
-    <linearGradient id="thought-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#06b6d4"/>
-    </linearGradient>
-
-    <radialGradient id="neural-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
-    </radialGradient>
-
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d">
+  <title id="t">The agent loop: reason, act, observe, answer</title>
+  <desc id="d">You ask the agent what 157 times 23 is. Claude reasons, decides to call the calculator tool, reads the result 3611, and answers 3,611. A TypeScript framework for building Claude agents with tools.</desc>
+  <defs><linearGradient id="title" x1="0" x2="1"><stop offset="0" stop-color="#d97757"/><stop offset=".5" stop-color="#b58cff"/><stop offset="1" stop-color="#3ec7ff"/></linearGradient></defs>
   <style>
-    @keyframes pulse-core {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.12); opacity: 1; }
-    }
-
-    @keyframes float-layer {
-      0%, 100% { transform: translateY(0); opacity: 0.6; }
-      50% { transform: translateY(-8px); opacity: 0.9; }
-    }
-
-    @keyframes flow-thought {
-      0% { stroke-dashoffset: 50; opacity: 0.3; }
-      50% { opacity: 0.8; }
-      100% { stroke-dashoffset: 0; opacity: 0.3; }
-    }
-
-    @keyframes neural-pulse {
-      0%, 100% { r: 6; opacity: 0.8; }
-      50% { r: 9; opacity: 1; }
-    }
-
-    @keyframes branch-pulse {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 0.6; }
-    }
-
-    @keyframes constellation-twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    .agent-core {
-      animation: pulse-core 6s ease-in-out infinite;
-    }
-
-    .reasoning-layer {
-      animation: float-layer 8s ease-in-out infinite;
-    }
-
-    .thought-stream {
-      stroke-dasharray: 10 5;
-      animation: flow-thought 4s linear infinite;
-    }
-
-    .neural-node {
-      animation: neural-pulse 3s ease-in-out infinite;
-    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill:#e6ebf5; }
+    .muted { fill:#8b96ad; } .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    @keyframes ask { 0%,2.73% { opacity:0; transform:translateY(8px); } 6.36%,94.55% { opacity:1; transform:translateY(0); } 97.27%,100% { opacity:0 } } .ask { animation:ask 11.0s infinite; }
+    @keyframes reason { 0%,16.36% { opacity:0; } 20.00%,94.55% { opacity:1; } 97.27%,100% { opacity:0 } } .reason { animation:reason 11.0s infinite; }
+    @keyframes tool { 0%,30.91% { opacity:0; } 34.55%,94.55% { opacity:1; } 97.27%,100% { opacity:0 } } .tool { animation:tool 11.0s infinite; }
+    @keyframes obs { 0%,45.45% { opacity:0; } 49.09%,94.55% { opacity:1; } 97.27%,100% { opacity:0 } } .obs { animation:obs 11.0s infinite; }
+    @keyframes ans { 0%,63.64% { opacity:0; transform:translateY(8px); } 67.27%,94.55% { opacity:1; transform:translateY(0); } 97.27%,100% { opacity:0 } } .ans { animation:ans 11.0s infinite; }
+    @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
   </style>
+  <rect width="960" height="420" rx="20" fill="#0f1420"/>
+  <text x="40" y="58" font-size="36" font-weight="800" style="fill:url(#title)">Your first Claude agent</text>
+  <text x="42" y="88" font-size="16" class="muted">Give Claude tools, and it works the problem: reason → act → observe → answer.</text>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+  <!-- prompt -->
+  <g class="ask"><rect x="40" y="180" width="250" height="56" rx="14" fill="#2a3550"/><text x="56" y="205" font-size="14">"What is 157 × 23?"</text><text x="56" y="226" font-size="11" class="muted">you</text></g>
 
-  <!-- Constellation pattern (scattered thinking nodes) -->
-  <g class="constellation" opacity="0.15">
-    <circle cx="150" cy="120" r="2" fill="#8b5cf6">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="280" cy="80" r="1.5" fill="#a855f7">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="5s" repeatCount="indefinite" begin="0.5s"/>
-    </circle>
-    <circle cx="450" cy="100" r="2" fill="#6366f1">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="4.5s" repeatCount="indefinite" begin="1s"/>
-    </circle>
-    <circle cx="750" cy="90" r="1.5" fill="#8b5cf6">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="5.5s" repeatCount="indefinite" begin="1.5s"/>
-    </circle>
-    <circle cx="920" cy="110" r="2" fill="#a855f7">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="4.8s" repeatCount="indefinite" begin="2s"/>
-    </circle>
-    <circle cx="1050" cy="140" r="1.5" fill="#6366f1">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="5.2s" repeatCount="indefinite" begin="2.5s"/>
-    </circle>
+  <!-- loop -->
+  <circle cx="610" cy="250" r="110" fill="none" stroke="#2c3750" stroke-width="2" stroke-dasharray="4 6"/>
+  <g class="reason"><rect x="500" y="146" width="150" height="44" rx="10" fill="#211a33" stroke="#b58cff"/><text x="575" y="166" text-anchor="middle" font-size="12.5" font-weight="700">Claude reasons</text><text x="575" y="182" text-anchor="middle" font-size="10" class="muted">"I'll use the calculator"</text></g>
+  <g class="tool"><rect x="690" y="228" width="160" height="44" rx="10" fill="#2a2510" stroke="#ffb02e"/><text x="770" y="248" text-anchor="middle" font-size="12.5" font-weight="700">calls a tool</text><text x="770" y="264" text-anchor="middle" font-size="10" class="mono muted">calculator(157,23)</text></g>
+  <g class="obs"><rect x="500" y="310" width="150" height="44" rx="10" fill="#0d1d2b" stroke="#3ec7ff"/><text x="575" y="330" text-anchor="middle" font-size="12.5" font-weight="700">reads result</text><text x="575" y="346" text-anchor="middle" font-size="10" class="mono muted">→ 3611</text></g>
 
-    <!-- Bottom constellation -->
-    <circle cx="200" cy="520" r="2" fill="#22d3ee">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="4.3s" repeatCount="indefinite" begin="3s"/>
-    </circle>
-    <circle cx="400" cy="550" r="1.5" fill="#06b6d4">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="4.7s" repeatCount="indefinite" begin="3.5s"/>
-    </circle>
-    <circle cx="800" cy="540" r="2" fill="#22d3ee">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="5.1s" repeatCount="indefinite" begin="4s"/>
-    </circle>
-    <circle cx="1000" cy="510" r="1.5" fill="#06b6d4">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="4.9s" repeatCount="indefinite" begin="4.5s"/>
-    </circle>
-
-    <!-- Constellation connections -->
-    <line x1="150" y1="120" x2="280" y2="80" stroke="#8b5cf6" stroke-width="0.5" opacity="0.2"/>
-    <line x1="280" y1="80" x2="450" y2="100" stroke="#a855f7" stroke-width="0.5" opacity="0.2"/>
-    <line x1="750" y1="90" x2="920" y2="110" stroke="#6366f1" stroke-width="0.5" opacity="0.2"/>
-  </g>
-
-  <!-- Central AI Agent Core -->
-  <g class="agent">
-    <circle cx="600" cy="315" r="100" fill="url(#neural-glow)" opacity="0.3"/>
-    <circle cx="600" cy="315" r="70" fill="url(#ai-gradient)" opacity="0.5" filter="url(#glow)"/>
-    <circle class="agent-core" cx="600" cy="315" r="45" fill="#8b5cf6" filter="url(#glow)"/>
-
-    <!-- Core inner structure -->
-    <circle cx="600" cy="315" r="30" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.6">
-      <animate attributeName="r" values="30;35;30" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="600" cy="315" r="18" fill="#6366f1" opacity="0.8">
-      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
-    </circle>
-
-    <!-- Pulsing outer rings -->
-    <circle cx="600" cy="315" r="55" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
-      <animate attributeName="r" values="55;100" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.7;0" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="600" cy="315" r="55" fill="none" stroke="#a855f7" stroke-width="2" opacity="0">
-      <animate attributeName="r" values="55;100" dur="4s" repeatCount="indefinite" begin="2s"/>
-      <animate attributeName="opacity" values="0.7;0" dur="4s" repeatCount="indefinite" begin="2s"/>
-    </circle>
-  </g>
-
-  <!-- Layered reasoning circles (representing layers of thought) -->
-  <g class="reasoning-layers">
-    <g class="reasoning-layer" style="animation-delay: 0s">
-      <circle cx="600" cy="315" r="140" fill="none" stroke="url(#thought-gradient)" stroke-width="1.5" opacity="0.4"/>
-      <circle cx="600" cy="175" r="8" fill="#22d3ee" opacity="0.7" filter="url(#glow)"/>
-    </g>
-
-    <g class="reasoning-layer" style="animation-delay: -2s">
-      <circle cx="600" cy="315" r="180" fill="none" stroke="url(#thought-gradient)" stroke-width="1.5" opacity="0.3"/>
-      <circle cx="600" cy="135" r="7" fill="#06b6d4" opacity="0.7" filter="url(#glow)"/>
-    </g>
-
-    <g class="reasoning-layer" style="animation-delay: -4s">
-      <circle cx="600" cy="315" r="220" fill="none" stroke="url(#thought-gradient)" stroke-width="1.5" opacity="0.25"/>
-      <circle cx="600" cy="95" r="6" fill="#22d3ee" opacity="0.6" filter="url(#glow)"/>
-    </g>
-  </g>
-
-  <!-- Branching decision tree structure -->
-  <g class="decision-branches" opacity="0.2">
-    <!-- Main trunk -->
-    <line x1="600" y1="315" x2="600" y2="100" stroke="#8b5cf6" stroke-width="2" class="branch-pulse"/>
-
-    <!-- Branches -->
-    <path d="M600,200 Q550,150 500,120" stroke="#a855f7" stroke-width="1.5" fill="none" class="branch-pulse" style="animation-delay: -0.5s"/>
-    <path d="M600,200 Q650,150 700,120" stroke="#a855f7" stroke-width="1.5" fill="none" class="branch-pulse" style="animation-delay: -1s"/>
-
-    <path d="M600,250 Q520,230 450,220" stroke="#6366f1" stroke-width="1.5" fill="none" class="branch-pulse" style="animation-delay: -1.5s"/>
-    <path d="M600,250 Q680,230 750,220" stroke="#6366f1" stroke-width="1.5" fill="none" class="branch-pulse" style="animation-delay: -2s"/>
-
-    <!-- Decision nodes -->
-    <circle cx="500" cy="120" r="5" fill="#a855f7" opacity="0.6"/>
-    <circle cx="700" cy="120" r="5" fill="#a855f7" opacity="0.6"/>
-    <circle cx="450" cy="220" r="5" fill="#6366f1" opacity="0.6"/>
-    <circle cx="750" cy="220" r="5" fill="#6366f1" opacity="0.6"/>
-  </g>
-
-  <!-- Neural network nodes -->
-  <g class="neural-network">
-    <!-- Left network cluster -->
-    <circle class="neural-node" cx="300" cy="250" r="6" fill="#8b5cf6" opacity="0.8" filter="url(#glow)" style="animation-delay: 0s"/>
-    <circle class="neural-node" cx="250" cy="315" r="6" fill="#a855f7" opacity="0.8" filter="url(#glow)" style="animation-delay: -1s"/>
-    <circle class="neural-node" cx="300" cy="380" r="6" fill="#6366f1" opacity="0.8" filter="url(#glow)" style="animation-delay: -2s"/>
-
-    <!-- Right network cluster -->
-    <circle class="neural-node" cx="900" cy="250" r="6" fill="#8b5cf6" opacity="0.8" filter="url(#glow)" style="animation-delay: -0.5s"/>
-    <circle class="neural-node" cx="950" cy="315" r="6" fill="#a855f7" opacity="0.8" filter="url(#glow)" style="animation-delay: -1.5s"/>
-    <circle class="neural-node" cx="900" cy="380" r="6" fill="#6366f1" opacity="0.8" filter="url(#glow)" style="animation-delay: -2.5s"/>
-
-    <!-- Network connections -->
-    <line x1="300" y1="250" x2="250" y2="315" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
-    <line x1="250" y1="315" x2="300" y2="380" stroke="#a855f7" stroke-width="1" opacity="0.3"/>
-    <line x1="300" y1="250" x2="300" y2="380" stroke="#6366f1" stroke-width="1" opacity="0.3"/>
-
-    <line x1="900" y1="250" x2="950" y2="315" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
-    <line x1="950" y1="315" x2="900" y2="380" stroke="#a855f7" stroke-width="1" opacity="0.3"/>
-    <line x1="900" y1="250" x2="900" y2="380" stroke="#6366f1" stroke-width="1" opacity="0.3"/>
-
-    <!-- Cross connections to center -->
-    <line class="thought-stream" x1="300" y1="315" x2="540" y2="315" stroke="url(#thought-gradient)" stroke-width="1.5" opacity="0.4"/>
-    <line class="thought-stream" x1="660" y1="315" x2="900" y2="315" stroke="url(#thought-gradient)" stroke-width="1.5" opacity="0.4" style="animation-delay: -2s"/>
-  </g>
-
-  <!-- Flowing thought streams (curved paths) -->
-  <g opacity="0.25">
-    <path d="M200,315 Q400,250 600,315" stroke="#22d3ee" stroke-width="2" fill="none" class="thought-stream" style="animation-delay: 0s"/>
-    <path d="M600,315 Q800,380 1000,315" stroke="#06b6d4" stroke-width="2" fill="none" class="thought-stream" style="animation-delay: -1s"/>
-    <path d="M300,150 Q450,200 600,150" stroke="#8b5cf6" stroke-width="1.5" fill="none" class="thought-stream" style="animation-delay: -2s"/>
-    <path d="M600,480 Q750,420 900,480" stroke="#a855f7" stroke-width="1.5" fill="none" class="thought-stream" style="animation-delay: -3s"/>
-  </g>
-
-  <!-- Ambient intelligence glows -->
-  <circle cx="600" cy="315" r="200" fill="#8b5cf6" opacity="0.02">
-    <animate attributeName="opacity" values="0.02;0.08;0.02" dur="8s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="300" cy="315" r="120" fill="#a855f7" opacity="0.02">
-    <animate attributeName="opacity" values="0.02;0.06;0.02" dur="7s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="900" cy="315" r="120" fill="#6366f1" opacity="0.02">
-    <animate attributeName="opacity" values="0.02;0.06;0.02" dur="7.5s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="600" cy="135" r="90" fill="#22d3ee" opacity="0.02">
-    <animate attributeName="opacity" values="0.02;0.05;0.02" dur="6.5s" repeatCount="indefinite"/>
-  </circle>
+  <!-- answer -->
+  <g class="ans"><rect x="40" y="300" width="300" height="70" rx="14" fill="#132a1e" stroke="#3ddc84"/><text x="56" y="328" font-size="14" style="fill:#9ff0c4">"157 × 23 = 3,611."</text><text x="56" y="350" font-size="11" class="muted">agent, after one tool call</text></g>
+  <path d="M290 208 C 380 208, 420 180, 500 168" fill="none" stroke="#2c3750" stroke-width="2" stroke-dasharray="3 5"/>
+  <path d="M500 335 C 420 345, 380 345, 340 340" fill="none" stroke="#2c3750" stroke-width="2" stroke-dasharray="3 5"/>
 </svg>
